@@ -12,7 +12,7 @@ mkdir -p "$PREFIX/deploy"
 
 sub(){ sed -e "s|@PREFIX@|$PREFIX|g" -e "s|@MODELS_DIR@|$MODELS|g" -e "s|@USER@|$RUN_USER|g" "$1"; }
 
-for f in server-gpu0.json server-gpu1.json llamacpp.env audiocpp.env; do
+for f in server-gpu0.json server-gpu1.json llamacpp.env audiocpp-gpu0.env audiocpp-gpu1.env; do
   [ -f "$PREFIX/deploy/$f" ] && { warn "preservando $PREFIX/deploy/$f (ja existe)"; continue; }
   sub "$HERE/deploy/$f" > "$PREFIX/deploy/$f"
 done

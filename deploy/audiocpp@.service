@@ -11,7 +11,7 @@ WorkingDirectory=@PREFIX@
 Environment=LD_LIBRARY_PATH=/usr/local/cuda-12.9/lib64
 # Isola a instancia numa placa: o processo so enxerga a GPU %i, que vira device 0
 Environment=CUDA_VISIBLE_DEVICES=%i
-EnvironmentFile=@PREFIX@/deploy/audiocpp.env
+EnvironmentFile=@PREFIX@/deploy/audiocpp-gpu%i.env
 ExecStart=@PREFIX@/audiocpp-sm70/audiocpp_server \
   --config @PREFIX@/deploy/server-gpu%i.json ${AUDIO_UI_FLAG} \
   --model-spec-override @PREFIX@/model_specs

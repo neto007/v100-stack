@@ -70,6 +70,12 @@ fp16 **97,7 TFLOP/s** (78% do pico teórico de 125).
 **Áudio, dois servidores balanceados (um por placa):** **2,04×** de vazão
 (1,53 → 3,13 req/s), distribuição 10/10. Veja [docs/audio-servers.md](docs/audio-servers.md).
 
+**Documento vira podcast** — uma aba na WebUI do audio.cpp que orquestra
+`llama-server` (roteiro, turno a turno via tool calling) e o OmniVoice (vozes
+ancoradas por clone) inteiramente no navegador, sem serviço novo. Patch em
+`patches/audiocpp-podcast-tab.patch`, aplicado automaticamente pelo build.
+Veja [docs/podcast.md](docs/podcast.md).
+
 ## Três recomendações populares que não se sustentaram
 
 Medimos e elas são falsas neste hardware. O raciocínio está em

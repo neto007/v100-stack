@@ -71,6 +71,8 @@ jobs:
         run: bash .github/free-disk.sh
       - name: CUDA 12.9
         run: bash .github/install-cuda.sh nvcc cudart-dev cublas-dev cufft-dev curand-dev nvtx
+      - uses: actions/setup-node@v4
+        with: { node-version: '24' }  # compila a WebUI (aba Podcast); ver docs/podcast.md
       - run: sudo apt-get install -y -qq gcc-13 g++-13 ccache
       - uses: actions/cache@v4
         with:

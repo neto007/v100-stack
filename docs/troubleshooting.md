@@ -102,3 +102,17 @@ O audio.cpp resolve `model_specs/` pelo diretório de trabalho. Com o runtime em
 `/opt` (fora da árvore de fontes), a unit precisa passar
 `--model-spec-override $PREFIX/model_specs`. O `setup-services.sh` copia os
 specs automaticamente se encontrar a árvore do audio.cpp.
+
+## `{"error":{"message":"unknown endpoint: /llm/v1/chat/completions"}}`
+
+Essa mensagem vem do **audiocpp_server**, não do nginx nem do llama-server —
+significa que a requisição caiu na porta errada. O proxy `/llm/` só existe no
+bloco `:8088` (pinado à GPU0). Se você acessou a WebUI por `:8080` (o pool
+balanceado), ela carrega normalmente — as duas placas servem a mesma UI
+estática — mas qualquer chamada a `/llm/` cai no `location /` genérico do
+pool, que a repassa para o audiocpp_server, e ele não conhece essa rota.
+
+**Use sempre `:8088` para a interface.** Isso deveria ser impossível pela
+config atual (`:8080` tem `location = /` fixo, nunca serve a página), mas se
+alguém remover essa trava, o sintoma volta. Ver `docs/podcast.md` e o trecho
+sobre pinning em `AGENTS.md`.

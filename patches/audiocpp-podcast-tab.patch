@@ -1,0 +1,1032 @@
+diff --git a/webui/native/package-lock.json b/webui/native/package-lock.json
+index 4a31564..65f2137 100644
+--- a/webui/native/package-lock.json
++++ b/webui/native/package-lock.json
+@@ -7,6 +7,9 @@
+     "": {
+       "name": "audiocpp-native-webui",
+       "version": "0.1.0",
++      "dependencies": {
++        "pdfjs-dist": "^6.3.289"
++      },
+       "devDependencies": {
+         "@sveltejs/adapter-static": "^3.0.9",
+         "@sveltejs/kit": "^2.37.0",
+@@ -509,6 +512,271 @@
+         "@jridgewell/sourcemap-codec": "^1.4.14"
+       }
+     },
++    "node_modules/@napi-rs/canvas": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas/-/canvas-1.0.9.tgz",
++      "integrity": "sha512-QviPdJImDi/jMAvBfqaw+19BndMd/sizXVW3NnpMd3VJGz++QXkOHcP9kWR/smHG0hNjHeyuHFyrx/5lD0oNcQ==",
++      "license": "MIT",
++      "optional": true,
++      "workspaces": [
++        "e2e/*"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      },
++      "optionalDependencies": {
++        "@napi-rs/canvas-android-arm64": "1.0.9",
++        "@napi-rs/canvas-darwin-arm64": "1.0.9",
++        "@napi-rs/canvas-darwin-x64": "1.0.9",
++        "@napi-rs/canvas-linux-arm-gnueabihf": "1.0.9",
++        "@napi-rs/canvas-linux-arm64-gnu": "1.0.9",
++        "@napi-rs/canvas-linux-arm64-musl": "1.0.9",
++        "@napi-rs/canvas-linux-riscv64-gnu": "1.0.9",
++        "@napi-rs/canvas-linux-x64-gnu": "1.0.9",
++        "@napi-rs/canvas-linux-x64-musl": "1.0.9",
++        "@napi-rs/canvas-win32-arm64-msvc": "1.0.9",
++        "@napi-rs/canvas-win32-x64-msvc": "1.0.9"
++      }
++    },
++    "node_modules/@napi-rs/canvas-android-arm64": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas-android-arm64/-/canvas-android-arm64-1.0.9.tgz",
++      "integrity": "sha512-4LGXk2/0HVzE29K8SzML5WubgCp++B1FH3qgl35XmSZE+lLdr6P9VRQEnZ0MCLZMTSuJP41yyhtoiVNEuvrTIA==",
++      "cpu": [
++        "arm64"
++      ],
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "android"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      }
++    },
++    "node_modules/@napi-rs/canvas-darwin-arm64": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas-darwin-arm64/-/canvas-darwin-arm64-1.0.9.tgz",
++      "integrity": "sha512-YNdfLBzY0W/Pep9fo2L6RmoNlNksnn05LRnX66W63R3ij58S25QOTcjdtEt2v8+PnCESzqZsYzUo+QPeIR44NA==",
++      "cpu": [
++        "arm64"
++      ],
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      }
++    },
++    "node_modules/@napi-rs/canvas-darwin-x64": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas-darwin-x64/-/canvas-darwin-x64-1.0.9.tgz",
++      "integrity": "sha512-ceZQSknTEcy3dOXoekv59LTCkXjvnLsq+VW5PeNNDHEPQbRS5Ervkm1EaDa7WLAjiYWMLuSQTRTHao1dEX4prg==",
++      "cpu": [
++        "x64"
++      ],
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      }
++    },
++    "node_modules/@napi-rs/canvas-linux-arm-gnueabihf": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-arm-gnueabihf/-/canvas-linux-arm-gnueabihf-1.0.9.tgz",
++      "integrity": "sha512-XhfI0Wwv4llhd6nnWDtY3kQKjq0r+y1i91PlJlJI24ag2U9WrnwbG1qS3+fDLEyouwEVFchiKkTEHozK+5iUNA==",
++      "cpu": [
++        "arm"
++      ],
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      }
++    },
++    "node_modules/@napi-rs/canvas-linux-arm64-gnu": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-arm64-gnu/-/canvas-linux-arm64-gnu-1.0.9.tgz",
++      "integrity": "sha512-012oiYtKaE7i9oxc8q7nraT7kDOpLcaCmFLzVe9Ty34RHDdoDzbWLrVh827CNxYh/EADX1eSikA3ymLjo/nNuw==",
++      "cpu": [
++        "arm64"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      }
++    },
++    "node_modules/@napi-rs/canvas-linux-arm64-musl": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-arm64-musl/-/canvas-linux-arm64-musl-1.0.9.tgz",
++      "integrity": "sha512-Ls5UWYFFn63casTZEczbeyEg3vRDRkv9lscuGwfchtY5yLLQhgOB8SN4YGxmfJ5vTaBwZ2YUxBS3NtmjJmFXdA==",
++      "cpu": [
++        "arm64"
++      ],
++      "libc": [
++        "musl"
++      ],
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      }
++    },
++    "node_modules/@napi-rs/canvas-linux-riscv64-gnu": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-riscv64-gnu/-/canvas-linux-riscv64-gnu-1.0.9.tgz",
++      "integrity": "sha512-hLKEGxV7ZiRHqndePTokgDMdBlo/rDfzg7P4p4QIv9pUhuYobnu3R2NIFLCRghG0nwfo+s2sw+c1xZFeCmEAsw==",
++      "cpu": [
++        "riscv64"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      }
++    },
++    "node_modules/@napi-rs/canvas-linux-x64-gnu": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-x64-gnu/-/canvas-linux-x64-gnu-1.0.9.tgz",
++      "integrity": "sha512-6kaz3w0QMy77PDWk6rJ1ksIihdad3qzEyX2o2oGT8GwCaypfT5mhjr8buOO5hstyLxcWXDScuz56RsINLtBPIQ==",
++      "cpu": [
++        "x64"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      }
++    },
++    "node_modules/@napi-rs/canvas-linux-x64-musl": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas-linux-x64-musl/-/canvas-linux-x64-musl-1.0.9.tgz",
++      "integrity": "sha512-xrGvmS3v55hmZ86ls/kBLVNMUTYio3f6Ik0DireemG994VfPAwiA3ZXA0Uf1bByctkB3NQ1Sfb+H5bkdUnnzfQ==",
++      "cpu": [
++        "x64"
++      ],
++      "libc": [
++        "musl"
++      ],
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      }
++    },
++    "node_modules/@napi-rs/canvas-win32-arm64-msvc": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas-win32-arm64-msvc/-/canvas-win32-arm64-msvc-1.0.9.tgz",
++      "integrity": "sha512-yjmVS3ArZeRVCP7jqbPq4rpZa/BhTeI7ELE2XqJg3snICQBDevLZyArxswHkiTnT34KRic33/4fLirrHI+SY8A==",
++      "cpu": [
++        "arm64"
++      ],
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "win32"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      }
++    },
++    "node_modules/@napi-rs/canvas-win32-x64-msvc": {
++      "version": "1.0.9",
++      "resolved": "https://registry.npmjs.org/@napi-rs/canvas-win32-x64-msvc/-/canvas-win32-x64-msvc-1.0.9.tgz",
++      "integrity": "sha512-QlSYQdMQslB81nlABo9wNfQ6npFhE7/O+saCZdqVGueGanyRk4jCogD5EwQenfP3kIq9e+mm6GreQBjX5MrA8g==",
++      "cpu": [
++        "x64"
++      ],
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "win32"
++      ],
++      "engines": {
++        "node": ">= 10"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      }
++    },
+     "node_modules/@polka/url": {
+       "version": "1.0.0-next.29",
+       "resolved": "https://registry.npmjs.org/@polka/url/-/url-1.0.0-next.29.tgz",
+@@ -1320,6 +1588,18 @@
+         "node": ">=12.20.0"
+       }
+     },
++    "node_modules/pdfjs-dist": {
++      "version": "6.3.289",
++      "resolved": "https://registry.npmjs.org/pdfjs-dist/-/pdfjs-dist-6.3.289.tgz",
++      "integrity": "sha512-ZHjSVpDa3D6izMq8/04lvkhkATUmL9px6ChPaXc1k6nU2Mrhlg1/7F0bdUqCwUjw3NsPTfPZsMDUU6ZIcRaeQw==",
++      "license": "Apache-2.0",
++      "engines": {
++        "node": ">=22.13.0 || >=24"
++      },
++      "optionalDependencies": {
++        "@napi-rs/canvas": "^1.0.0"
++      }
++    },
+     "node_modules/picocolors": {
+       "version": "1.1.1",
+       "resolved": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
+diff --git a/webui/native/package.json b/webui/native/package.json
+index 8fc8ff4..1c969f6 100644
+--- a/webui/native/package.json
++++ b/webui/native/package.json
+@@ -16,5 +16,8 @@
+     "svelte-check": "^4.3.1",
+     "typescript": "^5.9.2",
+     "vite": "^7.1.3"
++  },
++  "dependencies": {
++    "pdfjs-dist": "^6.3.289"
+   }
+ }
+diff --git a/webui/native/src/lib/Podcast.svelte b/webui/native/src/lib/Podcast.svelte
+new file mode 100644
+index 0000000..1dbf7c8
+--- /dev/null
++++ b/webui/native/src/lib/Podcast.svelte
+@@ -0,0 +1,588 @@
++<script lang="ts">
++  import { chatComplete, speech, uploadWav } from '$lib/api';
++  import { concatenateAudioBlobsWithGaps } from '$lib/audio';
++  import type { Translator } from '$lib/i18n';
++
++  export let tr: Translator = (key, _values, fallback = key) => fallback;
++
++  // Two-host podcast, NotebookLM "Deep Dive" style: paste or upload a document,
++  // an LLM (llama-server, proxied at /llm/) drafts an alternating-speaker
++  // script, then OmniVoice (this server's own /v1/audio/speech) voices each
++  // line and the browser stitches the result into one downloadable track.
++  // Everything runs client-side against the two model servers already
++  // exposed same-origin -- no extra backend service to deploy or keep running.
++  //
++  // Voice identity: OmniVoice's "voice design" (a free-text --instruct string)
++  // samples a NEW voice matching those attributes on every call -- a fixed
++  // seed does not pin identity across separate requests, confirmed by ear
++  // (an early version of this feature sounded like a different narrator on
++  // almost every line). The fix is to design each host's voice ONCE, from
++  // their first line, then CLONE that exact clip (voice_ref + reference_text)
++  // for every subsequent line by that host -- identity anchored in real audio
++  // instead of resampled from a description each time.
++
++  interface Turn { speaker: 'A' | 'B'; text: string; }
++  interface Script { title: string; turns: Turn[]; }
++  type StepStatus = 'idle' | 'script' | 'voice' | 'stitch' | 'done' | 'error';
++  type TurnStatus = 'queued' | 'voicing' | 'done';
++  interface HostAnchor { path: string; text: string; }
++
++  const PRESETS: Record<string, { label: string; instruct: string }> = {
++    hostA: { label: 'Host A', instruct: 'female, young adult, moderate pitch' },
++    hostB: { label: 'Host B', instruct: 'male, middle-aged, low pitch' }
++  };
++
++  // Recognized by OmniVoice's text tokenizer and rendered as actual
++  // paralinguistic sound, not spoken literally -- see tokenizer_text.cpp.
++  const NONVERBAL_TAGS = [
++    '[laughter]', '[sigh]', '[confirmation-en]', '[question-en]', '[question-ah]',
++    '[question-oh]', '[question-ei]', '[question-yi]', '[surprise-ah]', '[surprise-oh]',
++    '[surprise-wa]', '[surprise-yo]', '[dissatisfaction-hnn]'
++  ];
++
++  let docText = '';
++  let fileName = '';
++  let extracting = false;
++  let language = 'pt';
++  let turnCount = 10;
++  let speed = 0.92; // OmniVoice's default reads as noticeably fast for conversational pacing
++  let hostAInstruct = PRESETS.hostA.instruct;
++  let hostBInstruct = PRESETS.hostB.instruct;
++  let hostALabel = PRESETS.hostA.label;
++  let hostBLabel = PRESETS.hostB.label;
++  let hostAnchors: Record<'A' | 'B', HostAnchor | null> = { A: null, B: null };
++
++  let step: StepStatus = 'idle';
++  let statusText = '';
++  let errorText = '';
++  let script: Script | null = null;
++  let turnProgress = 0;
++  let turnStatuses: TurnStatus[] = [];
++  let finalAudioUrl = '';
++  let finalDurationSeconds = 0;
++  let aborted = false;
++
++  const MAX_DOC_CHARS = 12000; // keeps the script prompt well inside the 32k context
++
++  function resetOutput() {
++    script = null;
++    turnProgress = 0;
++    turnStatuses = [];
++    if (finalAudioUrl) URL.revokeObjectURL(finalAudioUrl);
++    finalAudioUrl = '';
++    finalDurationSeconds = 0;
++    errorText = '';
++    hostAnchors = { A: null, B: null }; // stale anchors would carry the previous run's voice
++  }
++
++  async function extractPdfText(file: File): Promise<string> {
++    // The server embeds ONLY dist/index.html (see CMakeLists.txt); anything
++    // Vite emits as a separate file -- which `new URL(worker, import.meta.url)`
++    // would -- is missing from the compiled binary. Importing the worker as a
++    // raw string keeps it inside the same inlined bundle as the rest of the app.
++    const pdfjs = await import('pdfjs-dist');
++    // @ts-expect-error -- Vite's `?raw` query has no ambient type declaration here
++    const workerSource = (await import('pdfjs-dist/build/pdf.worker.mjs?raw')).default as string;
++    pdfjs.GlobalWorkerOptions.workerSrc = URL.createObjectURL(
++      new Blob([workerSource], { type: 'application/javascript' })
++    );
++    const data = await file.arrayBuffer();
++    const doc = await pdfjs.getDocument({ data }).promise;
++    const pages: string[] = [];
++    for (let i = 1; i <= doc.numPages; i += 1) {
++      const page = await doc.getPage(i);
++      const content = await page.getTextContent();
++      pages.push(content.items.map((item) => ('str' in item ? item.str : '')).join(' '));
++    }
++    return pages.join('\n\n');
++  }
++
++  async function onFile(event: Event) {
++    const file = (event.target as HTMLInputElement).files?.[0];
++    if (!file) return;
++    fileName = file.name;
++    extracting = true;
++    errorText = '';
++    try {
++      const lower = file.name.toLowerCase();
++      docText = lower.endsWith('.pdf') ? await extractPdfText(file) : await file.text();
++    } catch (error) {
++      errorText = `Could not read ${file.name}: ${error instanceof Error ? error.message : error}`;
++      fileName = '';
++    } finally {
++      extracting = false;
++    }
++  }
++
++  function clearDoc() {
++    docText = '';
++    fileName = '';
++    resetOutput();
++  }
++
++  // OmniVoice's tokenizer matches these tags by an EXACT regex (see
++  // tokenizer_text.cpp); a close-but-wrong variant like "[laugh]" instead of
++  // "[laughter]" isn't a nonverbal sound at all -- it's spoken as literal,
++  // meaningless text. The prompt asks for exact strings, but LLMs still drift
++  // toward plausible synonyms often enough that this needs a hard backstop.
++  // A tag's suffix names the sound (question-EI, surprise-OH, ...), and the
++  // prompt explicitly forbids echoing it as a spoken word right after -- but
++  // this is a request the model drifts on, not a hard constraint (json_schema
++  // only enforces the JSON shape, never wording), so "[question-ei] Ei, ..."
++  // slips through often enough to need a backstop, not just a warning.
++  const ECHO_WORDS: Record<string, string[]> = {
++    '[question-ei]': ['ei'], '[question-ah]': ['ah'], '[question-oh]': ['oh'],
++    '[question-en]': ['en'], '[question-yi]': ['yi'],
++    '[surprise-ah]': ['ah'], '[surprise-oh]': ['oh'], '[surprise-wa]': ['wa', 'uau', 'nossa'],
++    '[surprise-yo]': ['yo'], '[confirmation-en]': ['en'],
++    '[dissatisfaction-hnn]': ['hnn', 'hmm'], '[laughter]': ['haha', 'kkk']
++  };
++
++  function escapeRegExp(value: string): string {
++    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
++  }
++
++  function sanitizeNonverbalTags(text: string): string {
++    let cleaned = text.replace(/\[[a-z-]+\]/gi, (match) =>
++      NONVERBAL_TAGS.includes(match.toLowerCase()) ? match.toLowerCase() : '');
++    for (const [tag, echoes] of Object.entries(ECHO_WORDS)) {
++      const pattern = new RegExp(
++        `(${escapeRegExp(tag)})\\s*(${echoes.join('|')})[,.!?…]*\\s*`, 'i'
++      );
++      cleaned = cleaned.replace(pattern, '$1 ');
++    }
++    return cleaned.replace(/[ \t]{2,}/g, ' ').replace(/^\s+|\s+$/g, '');
++  }
++
++  interface ChatMessage {
++    role: 'system' | 'user' | 'assistant' | 'tool';
++    content?: string;
++    tool_calls?: Array<{ id: string; type: 'function'; function: { name: string; arguments: string } }>;
++    tool_call_id?: string;
++  }
++
++  const WRITE_TURN_TOOL = {
++    type: 'function',
++    function: {
++      name: 'write_turn',
++      description: "Emits this host's next spoken line in the podcast.",
++      parameters: {
++        type: 'object',
++        properties: { text: { type: 'string' } },
++        required: ['text']
++      }
++    }
++  };
++
++  // Turn-by-turn generation via tool calling, one round-trip per line, instead
++  // of one big json_schema call for the whole script. A single call asked to
++  // plan N turns at once drifts by line 5-6: it reads as two narrators taking
++  // turns reporting facts, not people replying to each other, because the
++  // model is working from its own internal plan rather than the other host's
++  // ACTUAL committed words. Feeding back only the one tool call we keep (and
++  // discarding any extra calls the model volunteers in the same response --
++  // under tool_choice:"required" it will happily emit the whole episode in
++  // one burst if given the chance) forces every new line to be generated with
++  // the real prior line in context. Trades roughly 10x the round-trips (each
++  // with its own reasoning preamble) for materially better dialogue.
++  function systemPrompt(doc: string): string {
++    return `You are the co-writer for a podcast that discusses documents its audience sends in. `
++      + `Two hosts, A and B, riff on the document below like old friends catching up over coffee. `
++      + `This has to sound like two actual people thinking out loud, not a script -- real hosts `
++      + `almost never speak in tidy, evenly-sized sentences.\n\n`
++      + `This is the single most important rule: every line after the first must be a DIRECT REPLY `
++      + `to the specific thing the other host just said, not a new independent fact. If you removed `
++      + `the line before it, this line should stop making sense on its own -- that's how you know `
++      + `it's a real reply and not narrating the news. Ask the other host direct questions, push `
++      + `back on what they just claimed, ask "peraí, como assim?", finish their thought, or react `
++      + `specifically to a word they used. Never simply add a new fact next to the previous line -- `
++      + `engage with what was just said.\n`
++      + `Bad (two narrators): "[A] O Corinthians pega o Estudiantes quarta-feira." / "[B] O jogo `
++      + `é às 21h30 na Neo Química Arena." -- two separate facts, nobody is talking to anybody.\n`
++      + `Good (an actual reply): "[A] O Corinthians pega o Estudiantes quarta." / "[B] Quarta? Eu `
++      + `jurava que era semana que vem." / "[A] Não, é amanhã mesmo -- e olha que horário: 21h30." `
++      + `-- B reacts to A's specific claim (the day) before anything else happens.\n\n`
++      + `Vary line length hard: mix one-or-two-word reactions ("Não acredito.", "Espera.", "Sério `
++      + `mesmo?") with the occasional longer thought, and never let two consecutive lines run the `
++      + `same length. Let a host trail off ("...e aí ele simplesmente--") or self-correct `
++      + `("quer dizer, não bem isso, mas--") sometimes. Have them actually disagree, tease each `
++      + `other, or share a personal, slightly tangential opinion at least once -- not just build on `
++      + `("yes, and") what the other said. Use natural hedges and fillers native to the target `
++      + `language (things like "tipo", "sei lá", "cara" in Brazilian Portuguese) sparingly, only `
++      + `where a real person would actually pause.\n\n`
++      + `You may inline these paralinguistic tags where a real reaction would land -- sparingly, `
++      + `at most one per line, only where genuinely earned by the moment, and ONLY these exact `
++      + `strings, character for character -- never a variant or synonym: `
++      + `${NONVERBAL_TAGS.join(' ')}. They render as actual sounds, not spoken words. This means: `
++      + `never describe the sound in prose, AND never follow a tag with a spoken interjection that `
++      + `echoes it (the tag IS the reaction, so nothing after it should restate "Ah", "Oh", "Ei", `
++      + `"Wow", "Hmm" or similar in any language -- continue straight into the next real sentence). `
++      + `Bad: "[question-ei] Ei, sério?" -- Good: "[question-ei] Sério que ele fez isso?". `
++      + `Never write meta-commentary about the conversation itself (no "translating", "in other `
++      + `words", "resuming" or similar narrator asides) -- only the hosts' actual spoken lines.\n\n`
++      + `Write entirely in this language: ${language || 'the document\'s own language'}.\n\n`
++      + `You will be asked for one line at a time, always naming which host speaks next. Call `
++      + `write_turn with exactly that host's next line -- never write both hosts, never restate `
++      + `earlier lines, never plan ahead.\n\n`
++      + `DOCUMENT:\n${doc}`;
++  }
++
++  async function writeNextTurn(
++    history: ChatMessage[], speaker: 'A' | 'B', isFirst: boolean, isLast: boolean
++  ): Promise<{ text: string; history: ChatMessage[] }> {
++    const framing = isFirst
++      ? 'Open the episode with a hook that pulls the listener in.'
++      : isLast
++        ? 'This is the final line of the episode -- land on a clear, satisfying takeaway.'
++        : 'Reply directly to the specific thing that was just said.';
++    const nudge: ChatMessage = {
++      role: 'user',
++      content: `Now write Host ${speaker}'s next line. ${framing} Reminder: at most one tag, `
++        + `written exactly as specified, never echoed as a spoken word right after it; no `
++        + `commentary about the conversation itself.`
++    };
++    const requestMessages = [...history, nudge];
++    const response = await chatComplete({
++      messages: requestMessages,
++      tools: [WRITE_TURN_TOOL],
++      tool_choice: 'required',
++      temperature: 1.05,
++      // Each round only needs to produce ONE short line, but the model still
++      // reasons at length before calling the tool -- same headroom logic as
++      // the single-shot version, just smaller since there's one line to plan
++      // instead of a whole episode.
++      max_tokens: 3000
++    });
++    const choice = response.choices[0];
++    const call = choice?.message?.tool_calls?.[0];
++    if (!call) {
++      throw new Error(choice?.finish_reason === 'length'
++        ? `The script model ran out of budget writing Host ${speaker}'s line.`
++        : `The script model did not produce a line for Host ${speaker}.`);
++    }
++    let text: string;
++    try {
++      text = (JSON.parse(call.function.arguments) as { text: string }).text;
++    } catch {
++      throw new Error(`The script model returned a malformed line for Host ${speaker}.`);
++    }
++    // Commit ONLY this one call, discarding any others the model volunteered
++    // in the same response -- the next round must see this exact text, not
++    // whatever else the model additionally planned in the same breath.
++    const committed: ChatMessage[] = [
++      ...requestMessages,
++      { role: 'assistant', tool_calls: [call] },
++      { role: 'tool', tool_call_id: call.id, content: 'ok' }
++    ];
++    return { text: sanitizeNonverbalTags(text), history: committed };
++  }
++
++  async function draftTitle(turns: Turn[]): Promise<string> {
++    const transcript = turns.map((t) => `${t.speaker}: ${t.text}`).join('\n');
++    const schema = {
++      type: 'object', properties: { title: { type: 'string' } },
++      required: ['title'], additionalProperties: false
++    };
++    const response = await chatComplete({
++      messages: [{
++        role: 'user',
++        content: `Give this podcast episode a punchy, specific 3-8 word title (no quotes, no `
++          + `episode numbers).\n\n${transcript}`
++      }],
++      max_tokens: 1000,
++      response_format: { type: 'json_schema', json_schema: { name: 'episode_title', strict: true, schema } }
++    });
++    const content = response.choices[0]?.message?.content;
++    if (!content) return 'Podcast episode';
++    try { return (JSON.parse(content) as { title: string }).title || 'Podcast episode'; }
++    catch { return 'Podcast episode'; }
++  }
++
++  async function voiceTurn(turn: Turn): Promise<Blob> {
++    const anchor = hostAnchors[turn.speaker];
++    if (anchor) {
++      // Host already has a real clip to clone from: identity comes from the
++      // waveform, not a re-sampled description.
++      const result = await speech({
++        model: 'omnivoice',
++        input: turn.text,
++        language,
++        voice_ref: anchor.path,
++        reference_text: anchor.text,
++        options: { speed }
++      });
++      return result.blob;
++    }
++
++    // First line for this host: design the voice once, fixed seed for
++    // reproducibility across separate podcast runs (not for in-episode
++    // consistency, which the clone path above handles).
++    const instruct = turn.speaker === 'A' ? hostAInstruct : hostBInstruct;
++    const seed = turn.speaker === 'A' ? 100001 : 200002;
++    const result = await speech({
++      model: 'omnivoice',
++      input: turn.text,
++      language,
++      seed,
++      options: { instruct, speed }
++    });
++    const path = await uploadWav(result.blob);
++    hostAnchors[turn.speaker] = { path, text: turn.text };
++    return result.blob;
++  }
++
++  export async function generate() {
++    resetOutput();
++    aborted = false;
++    if (!docText.trim()) { errorText = 'Paste some text or upload a document first.'; return; }
++    try {
++      step = 'script';
++      const doc = docText.trim().slice(0, MAX_DOC_CHARS);
++      const truncatedNote = docText.trim().length > MAX_DOC_CHARS
++        ? '\n\n[document truncated to fit the context window]' : '';
++      let history: ChatMessage[] = [
++        { role: 'system', content: systemPrompt(doc + truncatedNote) }
++      ];
++      script = { title: '', turns: [] };
++      for (let i = 0; i < turnCount; i += 1) {
++        if (aborted) return;
++        const speaker: 'A' | 'B' = i % 2 === 0 ? 'A' : 'B';
++        statusText = `Writing line ${i + 1} of ${turnCount}…`;
++        const result = await writeNextTurn(history, speaker, i === 0, i === turnCount - 1);
++        history = result.history;
++        script.turns = [...script.turns, { speaker, text: result.text }];
++        turnStatuses = [...turnStatuses, 'queued'];
++      }
++      if (aborted) return;
++      statusText = 'Naming the episode…';
++      script.title = await draftTitle(script.turns);
++
++      step = 'voice';
++      const clips: Blob[] = [];
++      for (let i = 0; i < script.turns.length; i += 1) {
++        if (aborted) return;
++        turnProgress = i;
++        turnStatuses[i] = 'voicing';
++        statusText = `Voicing line ${i + 1} of ${script.turns.length}…`;
++        clips.push(await voiceTurn(script.turns[i]));
++        turnStatuses[i] = 'done';
++      }
++      turnProgress = script.turns.length;
++
++      step = 'stitch';
++      statusText = 'Stitching the episode together…';
++      const merged = await concatenateAudioBlobsWithGaps(clips, 0.35);
++      finalAudioUrl = URL.createObjectURL(merged);
++
++      const context = new AudioContext();
++      try {
++        const decoded = await context.decodeAudioData(await merged.arrayBuffer());
++        finalDurationSeconds = decoded.duration;
++      } finally {
++        await context.close();
++      }
++
++      step = 'done';
++      statusText = 'Episode ready.';
++    } catch (error) {
++      step = 'error';
++      errorText = error instanceof Error ? error.message : String(error);
++    }
++  }
++
++  function cancel() {
++    aborted = true;
++    step = 'idle';
++    statusText = '';
++  }
++
++  $: busy = step === 'script' || step === 'voice' || step === 'stitch';
++</script>
++
++<section class="hero">
++  <div>
++    <p class="eyebrow">PODCAST</p>
++    <h1>{script?.title || 'Turn a document into an episode'}</h1>
++    <p>Two hosts read, react to, and riff on whatever you hand them -- paste text or drop a
++      file, get back one narrated conversation.</p>
++  </div>
++  <div class="hero-stat">
++    <span>Episode</span>
++    <strong>
++      {#if finalDurationSeconds}{Math.round(finalDurationSeconds)}s · {script?.turns.length} lines
++      {:else if script}{script.turns.length} lines queued
++      {:else}Not generated yet{/if}
++    </strong>
++    <small class:ready={step === 'done'}>
++      {step === 'error' ? 'Failed' : step === 'idle' ? 'Ready when you are' : step === 'done' ? 'Ready to play' : 'Working…'}
++    </small>
++  </div>
++</section>
++
++<div class="podcast-grid">
++  <section class="panel podcast-source">
++    <div class="section-title">
++      <div><span>SOURCE</span><h2>Document</h2></div>
++    </div>
++    <p class="field-label">Text or file<span> paste it in, or upload .txt / .md / .pdf</span></p>
++    <label class="file-picker">
++      <input class="file-native" type="file" accept=".txt,.md,.pdf,text/plain,application/pdf"
++        on:change={onFile} disabled={busy} />
++      <strong>{tr('file.choose')}</strong>
++      <span>{extracting ? 'Reading…' : fileName || tr('file.none')}</span>
++    </label>
++    <textarea class="code" rows="9" placeholder="…or paste the document text here"
++      bind:value={docText} disabled={busy}></textarea>
++    {#if fileName}
++      <div class="button-row"><button on:click={clearDoc} disabled={busy}>{tr('file.clear')}</button></div>
++    {/if}
++
++    <div class="field-grid">
++      <div>
++        <p class="field-label">Language<span> ISO code, e.g. pt, en, zh</span></p>
++        <input type="text" bind:value={language} disabled={busy} placeholder="pt" />
++      </div>
++      <div>
++        <p class="field-label">Dialogue turns</p>
++        <div class="range">
++          <input type="range" min="6" max="20" step="2" bind:value={turnCount} disabled={busy} />
++          <output>{turnCount}</output>
++        </div>
++      </div>
++      <div>
++        <p class="field-label">Speaking speed</p>
++        <div class="range">
++          <input type="range" min="0.75" max="1.15" step="0.01" bind:value={speed} disabled={busy} />
++          <output>{speed.toFixed(2)}×</output>
++        </div>
++      </div>
++    </div>
++
++    <div class="runbar">
++      <button class="run" disabled={busy || !docText.trim()} on:click={generate}>
++        <span>{busy ? 'Working…' : 'Generate podcast'}</span>
++      </button>
++      <button disabled={!busy} on:click={cancel}>{tr('run.cancel')}</button>
++      <div class="status" class:busy class:error={step === 'error'}>
++        {step === 'error' ? errorText : statusText}
++      </div>
++    </div>
++  </section>
++
++  <section class="podcast-cast-column">
++    <section class="panel podcast-cast">
++      <div class="section-title">
++        <div><span>CAST</span><h2>Hosts</h2></div>
++      </div>
++      <div class="host-grid">
++        <div class="host-card">
++          <div class="host-avatar host-a">A</div>
++          <div class="host-fields">
++            <p class="field-label">{hostALabel}</p>
++            <input type="text" bind:value={hostAInstruct} disabled={busy} />
++          </div>
++        </div>
++        <div class="host-card">
++          <div class="host-avatar host-b">B</div>
++          <div class="host-fields">
++            <p class="field-label">{hostBLabel}</p>
++            <input type="text" bind:value={hostBInstruct} disabled={busy} />
++          </div>
++        </div>
++      </div>
++      <p class="hint">Attributes: male/female · child, teenager, young adult, middle-aged,
++        elderly · very low to very high pitch · whisper. Each host's first line designs the
++        voice; every later line clones that exact clip, so the narrator stays the same person
++        for the whole episode.</p>
++    </section>
++
++    <section class="panel podcast-episode">
++      <div class="section-title">
++        <div><span>RESULT</span><h2>Episode</h2></div>
++        {#if finalDurationSeconds}<span class="task-chip">{Math.round(finalDurationSeconds)}s</span>{/if}
++      </div>
++      {#if finalAudioUrl}
++        <div class="audio-list">
++          <article>
++            <div><strong>{script?.title || 'podcast'}</strong>
++              <a href={finalAudioUrl} download="podcast.wav">{tr('result.saveWav')}</a></div>
++            <audio controls src={finalAudioUrl}></audio>
++          </article>
++        </div>
++      {:else}
++        <div class="empty-output"><div class="wave">∿</div><p>{tr('result.empty')}</p></div>
++      {/if}
++    </section>
++  </section>
++</div>
++
++{#if script}
++  <section class="panel podcast-script">
++    <div class="section-title">
++      <div><span>SCRIPT</span><h2>Turns</h2></div>
++      <span class="task-chip">{script.turns.length} lines</span>
++    </div>
++    <div class="podcast-turns">
++      {#each script.turns as turn, i}
++        <article class="turn-card" class:host-a={turn.speaker === 'A'} class:host-b={turn.speaker === 'B'}
++          class:voicing={turnStatuses[i] === 'voicing'} class:done={turnStatuses[i] === 'done'}>
++          <div class="turn-speaker">{turn.speaker === 'A' ? hostALabel : hostBLabel}</div>
++          <p>{turn.text}</p>
++          {#if turnStatuses[i] === 'voicing'}<span class="turn-status">voicing…</span>{/if}
++        </article>
++      {/each}
++    </div>
++  </section>
++{/if}
++
++<style>
++  .podcast-grid {
++    display: grid; grid-template-columns: minmax(360px, 1.15fr) minmax(320px, .85fr);
++    gap: 11px; align-items: start;
++  }
++  .podcast-source, .podcast-cast, .podcast-episode { padding: 14px; }
++  .podcast-source .runbar { grid-template-columns: 168px 74px 1fr; }
++  .podcast-cast-column { display: grid; gap: 11px; }
++
++  .host-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
++  .host-card {
++    display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: start;
++    padding: 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--card-bg);
++  }
++  .host-avatar {
++    display: grid; place-items: center; width: 34px; height: 34px; border-radius: 9px;
++    color: var(--text-invert); font-weight: 900; font-size: 14px;
++  }
++  .host-avatar.host-a { background: linear-gradient(135deg, var(--cyan), #5ac7ff); }
++  .host-avatar.host-b { background: linear-gradient(135deg, var(--blue), #9a7bff); }
++  .host-fields { min-width: 0; }
++  .host-fields .field-label { margin-top: 0; }
++
++  .podcast-turns { display: grid; gap: 8px; margin-top: 4px; }
++  .turn-card {
++    position: relative; display: grid; grid-template-columns: 84px 1fr; gap: 12px;
++    padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px;
++    background: var(--card-bg); transition: border-color .15s, background .15s;
++  }
++  .turn-card p { margin: 0; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
++  .turn-speaker {
++    font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
++    padding-top: 2px;
++  }
++  .turn-card.host-a .turn-speaker { color: var(--cyan); }
++  .turn-card.host-b .turn-speaker { color: var(--blue); }
++  .turn-card.voicing { border-color: var(--active-border); background: var(--active-bg); }
++  .turn-card.done { border-color: color-mix(in srgb, var(--line) 60%, var(--cyan) 40%); }
++  .turn-status {
++    position: absolute; top: 8px; right: 10px; color: var(--cyan); font-size: 10px;
++    text-transform: uppercase; letter-spacing: .06em;
++  }
++
++  @media (max-width: 1200px) {
++    .podcast-grid { grid-template-columns: 1fr; }
++  }
++  @media (max-width: 820px) {
++    .host-grid { grid-template-columns: 1fr; }
++    .turn-card { grid-template-columns: 1fr; gap: 4px; }
++  }
++</style>
+diff --git a/webui/native/src/lib/api.ts b/webui/native/src/lib/api.ts
+index 85443fc..a476bea 100644
+--- a/webui/native/src/lib/api.ts
++++ b/webui/native/src/lib/api.ts
+@@ -189,6 +189,22 @@ export async function uploadFile(file: File, signal?: AbortSignal): Promise<stri
+   return response.path;
+ }
+ 
++// Proxied by nginx at /llm/ to the llama-server instance (see docs/operacao.md
++// in the v100-stack repo). Not part of audio.cpp's own API surface.
++export async function chatComplete(body: Record<string, unknown>, signal?: AbortSignal) {
++  return jsonRequest<{
++    choices: Array<{
++      message: {
++        content: string;
++        reasoning_content?: string;
++        tool_calls?: Array<{ id: string; type: 'function'; function: { name: string; arguments: string } }>;
++      };
++      finish_reason: string;
++    }>;
++    usage?: { completion_tokens: number; prompt_tokens: number; total_tokens: number };
++  }>('/llm/v1/chat/completions', { method: 'POST', body: JSON.stringify(body) }, signal);
++}
++
+ export async function speech(body: Record<string, unknown>, signal?: AbortSignal) {
+   const response = await fetch(apiUrl('/v1/audio/speech'), {
+     method: 'POST',
+diff --git a/webui/native/src/lib/audio.ts b/webui/native/src/lib/audio.ts
+index 9af714a..65dd603 100644
+--- a/webui/native/src/lib/audio.ts
++++ b/webui/native/src/lib/audio.ts
+@@ -65,6 +65,38 @@ export async function concatenateAudioBlobs(blobs: Blob[]): Promise<Blob> {
+   }
+ }
+ 
++export async function concatenateAudioBlobsWithGaps(blobs: Blob[], gapSeconds = 0): Promise<Blob> {
++  if (!blobs.length) throw new Error('No audio chunks were generated.');
++  if (blobs.length === 1 || gapSeconds <= 0) return concatenateAudioBlobs(blobs);
++
++  const context = new AudioContext();
++  try {
++    const decoded = await Promise.all(blobs.map(async (blob) =>
++      context.decodeAudioData(await blob.arrayBuffer())));
++    const sampleRate = decoded[0].sampleRate;
++    const channels = decoded[0].numberOfChannels;
++    for (const chunk of decoded) {
++      if (chunk.sampleRate !== sampleRate || chunk.numberOfChannels !== channels) {
++        throw new Error('Generated chunks use different audio formats and cannot be joined.');
++      }
++    }
++    const gapFrames = Math.round(gapSeconds * sampleRate);
++    const totalFrames = decoded.reduce((sum, chunk) => sum + chunk.length, 0) + gapFrames * (decoded.length - 1);
++    const merged = context.createBuffer(channels, totalFrames, sampleRate);
++    let offset = 0;
++    decoded.forEach((chunk, index) => {
++      for (let channel = 0; channel < channels; channel += 1) {
++        merged.copyToChannel(chunk.getChannelData(channel), channel, offset);
++      }
++      offset += chunk.length;
++      if (index < decoded.length - 1) offset += gapFrames; // silence is already zero-filled
++    });
++    return encodePcm16Wav(merged);
++  } finally {
++    await context.close();
++  }
++}
++
+ export async function browserDecodeToWav(file: File, targetSampleRate?: number): Promise<Blob> {
+   if (!targetSampleRate && (file.type === 'audio/wav' || file.name.toLowerCase().endsWith('.wav'))) {
+     return file;
+diff --git a/webui/native/src/lib/i18n.ts b/webui/native/src/lib/i18n.ts
+index 5a37eef..002b52c 100644
+--- a/webui/native/src/lib/i18n.ts
++++ b/webui/native/src/lib/i18n.ts
+@@ -16,6 +16,7 @@ const english: Record<string, string> = {
+   'app.nativeStudio': 'Native Studio',
+   'nav.studio': 'Studio',
+   'nav.arena': 'Arena',
++  'nav.podcast': 'Podcast',
+   'nav.models': 'Models',
+   'nav.runtime': 'Runtime',
+   'nav.primary': 'Primary navigation',
+diff --git a/webui/native/src/routes/+page.svelte b/webui/native/src/routes/+page.svelte
+index d82fe10..7c16150 100644
+--- a/webui/native/src/routes/+page.svelte
++++ b/webui/native/src/routes/+page.svelte
+@@ -35,6 +35,7 @@
+   import { defaultChunkBudget, splitTtsChunks } from '$lib/text';
+   import { UI_THEME_STORAGE_KEY, resolvedTheme, resolveUiTheme, uiThemes, type UiTheme } from '$lib/theme';
+   import Arena from './Arena.svelte';
++  import Podcast from '$lib/Podcast.svelte';
+   import type {
+     AudioOutput,
+     CatalogEntry,
+@@ -51,7 +52,7 @@
+   } from '$lib/voices';
+   import '../app.css';
+ 
+-  let tab: 'studio' | 'arena' | 'models' | 'logs' = 'studio';
++  let tab: 'studio' | 'arena' | 'podcast' | 'models' | 'logs' = 'studio';
+   let arenaComponent: { runArena: () => Promise<void> } | null = null;
+   let selectedId = catalog[0]?.id || '';
+   let selected: CatalogEntry = catalog[0];
+@@ -2078,6 +2079,7 @@
+   <nav aria-label={tr('nav.primary')}>
+     <button class:active={tab === 'studio'} on:click={openStudioPage}>{tr('nav.studio')}</button>
+     <button class:active={tab === 'arena'} on:click={() => tab = 'arena'}>{tr('nav.arena')}</button>
++    <button class:active={tab === 'podcast'} on:click={() => tab = 'podcast'}>{tr('nav.podcast')}</button>
+     {#if server?.ui_management !== false}
+       <button class:active={tab === 'models'} on:click={openModelsPage}>{tr('nav.models')}</button>
+     {/if}
+@@ -2547,6 +2549,8 @@
+       {log}
+       {tr}
+     />
++  {:else if tab === 'podcast'}
++    <Podcast {tr} />
+   {:else if tab === 'models'}
+     <section class="page-head">
+       <p class="eyebrow">{tr('models.eyebrow')}</p><h1>{tr('models.title')}</h1>

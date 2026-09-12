@@ -122,6 +122,38 @@ A WebUI de áudio é pinada de propósito: o `upload_root_` do audiocpp inclui u
 timestamp por processo, então upload numa instância e síntese na outra
 quebraria clonagem de voz. Não "conserte" isso balanceando.
 
+**Isso é reforçado em dois lugares, não é só convenção:** cada placa tem seu
+próprio `deploy/audiocpp-gpu{0,1}.env` (a GPU1 nunca aceita `--ui`), e o nginx
+tem `location = /` fixo em `:8080` devolvendo um JSON estático — a raiz do
+pool balanceado nunca serve a página, mesmo se alguém religar `--ui` nos dois
+por engano. Se `:8080/` alguma vez devolver HTML, um desses dois quebrou.
+
+## Gerando diálogo com LLM: o que não funciona por instrução sozinha
+
+Da aba Podcast ([docs/podcast.md](docs/podcast.md)). Nenhum destes é bug do
+llama-server — é o hiato normal entre "pedir no prompt" e "o modelo obedece
+100% das vezes":
+
+- **Tool calling não incrementaliza sozinho.** Com `tool_choice: "required"`
+  e sem nada que force pausa, o modelo despeja várias `tool_calls` na mesma
+  resposta — mesmo problema de um `json_schema` de bloco único, só embrulhado
+  diferente. Para ganhar contexto real incremental, o **cliente** precisa
+  pegar só a primeira chamada e descartar o resto a cada rodada.
+- **Voice design (`options.instruct`) não ancora identidade entre chamadas.**
+  Seed fixa não impede o OmniVoice de reamostrar uma voz nova a cada request.
+  Para consistência real, ancore em `voice_ref` + `reference_text` a partir de
+  um clipe já gerado.
+- **Formato exato pedido no prompt (tags, enums, sintaxe) precisa de
+  blindagem no cliente.** `json_schema`/tools garantem a *forma* da resposta,
+  nunca o conteúdo exato — um LLM vai inventar variante plausível (`[laugh]`
+  por `[laughter]`) ou repetir uma instrução de "não faça X" com frequência
+  suficiente para exigir um filtro determinístico depois, não só instrução no
+  prompt.
+- **`max_tokens` para modelo de reasoning precisa de folga generosa e
+  variável.** O comprimento do raciocínio não é fixo entre execuções da mesma
+  chamada; um teto ajustado ao caso médio corta no meio do pensamento em
+  alguma fração das vezes, sem nunca emitir a resposta.
+
 ## Estrutura
 
 ```

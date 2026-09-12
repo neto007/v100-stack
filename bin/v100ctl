@@ -7,7 +7,7 @@
 set -euo pipefail
 PREFIX=@PREFIX@
 AUDIO=(audiocpp@0 audiocpp@1)
-AUDIO_ENV=$PREFIX/deploy/audiocpp.env
+AUDIO_ENV=$PREFIX/deploy/audiocpp-gpu0.env  # so a GPU0 (atras de :8088) pode servir UI
 LAN_IP=$(ip -4 route get 1.1.1.1 2>/dev/null | awk '{print $7; exit}' || echo 127.0.0.1)
 
 c(){ printf '\033[%sm%s\033[0m' "$1" "$2"; }
