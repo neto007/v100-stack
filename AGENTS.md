@@ -153,6 +153,24 @@ llama-server — é o hiato normal entre "pedir no prompt" e "o modelo obedece
   variável.** O comprimento do raciocínio não é fixo entre execuções da mesma
   chamada; um teto ajustado ao caso médio corta no meio do pensamento em
   alguma fração das vezes, sem nunca emitir a resposta.
+- **Empurrar por "casual" demais sacrifica clareza.** Pedir fragmentos,
+  gírias e frases bem curtas produziu frases sem sentido (`"é o cara na
+  cal"`) e fatos inventados (um dia da semana que não estava no documento). A
+  correção não foi recuar da regra de resposta direta — foi adicionar uma
+  regra de clareza que vence estilo, e proibir explicitamente inventar
+  detalhe específico não presente na fonte.
+- **Blindagem de regex sem limite de palavra corrompe texto real.** O filtro
+  que removia eco de tag (`"[question-ei] Ei, sério?"` → `"[question-ei]
+  sério?"`) cortava as duas primeiras letras de qualquer palavra que começe
+  com o mesmo padrão — `"[confirmation-en] Então"` virou `"[confirmation-en]
+  tão"`. `\b` do JS não resolve com acento (`\w` é ASCII-only); a correção
+  precisa de `(?![\p{L}])` com a flag `u`.
+
+Trocar o modelo de voz por um fine-tune (safetensors) exige o conversor
+`audiocpp_gguf` do próprio projeto — não é um GGUF genérico de llama.cpp. Ver
+[docs/models.md](docs/models.md); os namespaces de tensor (`weights`,
+`audio_tokenizer_weights` para OmniVoice) vêm de `assets.cpp` de cada família,
+não são universais.
 
 ## Estrutura
 

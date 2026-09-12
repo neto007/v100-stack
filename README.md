@@ -74,7 +74,9 @@ fp16 **97,7 TFLOP/s** (78% do pico teórico de 125).
 `llama-server` (roteiro, turno a turno via tool calling) e o OmniVoice (vozes
 ancoradas por clone) inteiramente no navegador, sem serviço novo. Patch em
 `patches/audiocpp-podcast-tab.patch`, aplicado automaticamente pelo build.
-Veja [docs/podcast.md](docs/podcast.md).
+Veja [docs/podcast.md](docs/podcast.md). Trocar o modelo de voz por um
+fine-tune (ex. pt-BR) exige converter safetensors → GGUF próprio do projeto —
+processo documentado em [docs/models.md](docs/models.md).
 
 ## Três recomendações populares que não se sustentaram
 

@@ -318,10 +318,10 @@ index 8fc8ff4..1c969f6 100644
  }
 diff --git a/webui/native/src/lib/Podcast.svelte b/webui/native/src/lib/Podcast.svelte
 new file mode 100644
-index 0000000..1dbf7c8
+index 0000000..2fef088
 --- /dev/null
 +++ b/webui/native/src/lib/Podcast.svelte
-@@ -0,0 +1,588 @@
+@@ -0,0 +1,605 @@
 +<script lang="ts">
 +  import { chatComplete, speech, uploadWav } from '$lib/api';
 +  import { concatenateAudioBlobsWithGaps } from '$lib/audio';
@@ -470,8 +470,12 @@ index 0000000..1dbf7c8
 +    let cleaned = text.replace(/\[[a-z-]+\]/gi, (match) =>
 +      NONVERBAL_TAGS.includes(match.toLowerCase()) ? match.toLowerCase() : '');
 +    for (const [tag, echoes] of Object.entries(ECHO_WORDS)) {
++      // (?![\p{L}]) requires the echo to be a whole word, not a prefix of a
++      // longer one -- without it, "[confirmation-en] Então" matched "en" as
++      // a prefix of "Então" and mangled it into "tão" (\b alone doesn't help:
++      // JS's \w is ASCII-only, so "n|ã" already counts as a boundary).
 +      const pattern = new RegExp(
-+        `(${escapeRegExp(tag)})\\s*(${echoes.join('|')})[,.!?…]*\\s*`, 'i'
++        `(${escapeRegExp(tag)})\\s*(?:${echoes.join('|')})(?![\\p{L}])[,.!?…]*\\s*`, 'iu'
 +      );
 +      cleaned = cleaned.replace(pattern, '$1 ');
 +    }
@@ -526,14 +530,25 @@ index 0000000..1dbf7c8
 +      + `Good (an actual reply): "[A] O Corinthians pega o Estudiantes quarta." / "[B] Quarta? Eu `
 +      + `jurava que era semana que vem." / "[A] Não, é amanhã mesmo -- e olha que horário: 21h30." `
 +      + `-- B reacts to A's specific claim (the day) before anything else happens.\n\n`
-+      + `Vary line length hard: mix one-or-two-word reactions ("Não acredito.", "Espera.", "Sério `
-+      + `mesmo?") with the occasional longer thought, and never let two consecutive lines run the `
-+      + `same length. Let a host trail off ("...e aí ele simplesmente--") or self-correct `
-+      + `("quer dizer, não bem isso, mas--") sometimes. Have them actually disagree, tease each `
-+      + `other, or share a personal, slightly tangential opinion at least once -- not just build on `
-+      + `("yes, and") what the other said. Use natural hedges and fillers native to the target `
-+      + `language (things like "tipo", "sei lá", "cara" in Brazilian Portuguese) sparingly, only `
-+      + `where a real person would actually pause.\n\n`
++      + `Vary line length: mix the occasional one-or-two-word reaction ("Não acredito.", "Espera.", `
++      + `"Sério mesmo?") with longer thoughts, and don't let two consecutive lines run the same `
++      + `length. A host may trail off or self-correct sometimes. Have them actually disagree, tease `
++      + `each other, or share a personal, slightly tangential opinion at least once -- not just `
++      + `build on ("yes, and") what the other said. A hedge or filler native to the target language `
++      + `("tipo", "sei lá") is fine sparingly, where a real person would actually pause.\n\n`
++      + `But casual is not the same as unclear, and this matters more than sounding relaxed: every `
++      + `single line must be something a listener can understand on ONE listen, with a complete, `
++      + `sensible thought. If a shorter or more fragmented version of a line would be even slightly `
++      + `confusing, ambiguous, or grammatically broken, write the clearer, more complete version `
++      + `instead -- clarity always wins over style. Never invent a slang term, idiom, or nickname `
++      + `to sound casual; only use expressions and nicknames you're confident a native speaker would `
++      + `actually recognize, and once you pick a nickname for a person, team, or place, keep using `
++      + `that exact same one for the rest of the episode -- never switch between two different `
++      + `nicknames for the same thing.\n\n`
++      + `Only state facts, dates, numbers, and details that are actually in the document below or `
++      + `were already said earlier in this conversation. Never invent a specific day, time, number, `
++      + `or claim to fill a line -- if you're not sure the document supports it, say something vaguer `
++      + `("em breve", "depois disso") instead of a specific-sounding invented detail.\n\n`
 +      + `You may inline these paralinguistic tags where a real reaction would land -- sparingly, `
 +      + `at most one per line, only where genuinely earned by the moment, and ONLY these exact `
 +      + `strings, character for character -- never a variant or synonym: `
@@ -561,9 +576,11 @@ index 0000000..1dbf7c8
 +        : 'Reply directly to the specific thing that was just said.';
 +    const nudge: ChatMessage = {
 +      role: 'user',
-+      content: `Now write Host ${speaker}'s next line. ${framing} Reminder: at most one tag, `
-+        + `written exactly as specified, never echoed as a spoken word right after it; no `
-+        + `commentary about the conversation itself.`
++      content: `Now write Host ${speaker}'s next line. ${framing} Reminder: this line must make `
++        + `complete, immediate sense on one listen -- don't sacrifice clarity for a fragment or `
++        + `invented slang; don't state any date, number, or detail not already established; keep `
++        + `any nickname exactly as used before. At most one tag, written exactly as specified, `
++        + `never echoed as a spoken word right after it; no commentary about the conversation itself.`
 +    };
 +    const requestMessages = [...history, nudge];
 +    const response = await chatComplete({
