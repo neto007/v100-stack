@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Controle dos servicos do stack V100. Nada sobe no boot: tudo sob demanda.
+set -euo pipefail
+PREFIX=/opt/v100-stack
+AUDIO=(audiocpp@0 audiocpp@1)
+
+c(){ printf '\033[%sm%s\033[0m' "$1" "$2"; }
+vram(){ nvidia-smi --query-gpu=index,memory.used,memory.total,utilization.gpu \
+        --format=csv,noheader,nounits | awk -F', ' \
+        '{printf "  GPU%s  %5d / %5d MiB  (%2d%%)\n",$1,$2,$3,$4}'; }
+
+wait_health(){ # $1=url  $2=segundos
+  for _ in $(seq 1 "${2:-60}"); do
+    curl -sf --max-time 2 "$1" >/dev/null 2>&1 && return 0; sleep 1
+  done; return 1; }
+
+case "${1:-status}" in
+  audio)
+    case "${2:-status}" in
+      start) sudo systemctl start "${AUDIO[@]}" nginx
+             wait_health http://127.0.0.1:8080/health 60 \
+               && echo "$(c 32 '[OK]') audio no ar em http://127.0.0.1:8080  (balanceado nas 2 placas)" \
+               || { echo "$(c 31 '[FALHA]') veja: journalctl -u audiocpp@0 -n 30"; exit 1; } ;;
+      stop)  sudo systemctl stop "${AUDIO[@]}"; echo "audio parado" ;;
+      logs)  sudo journalctl -u audiocpp@0 -u audiocpp@1 -f ;;
+      *)     systemctl is-active "${AUDIO[@]}" | tr '\n' ' '; echo ;;
+    esac ;;
+  llm)
+    case "${2:-status}" in
+      start) sudo systemctl start llamacpp
+             echo "carregando o modelo (17,6 GiB + draft), leva ~1 min..."
+             wait_health http://127.0.0.1:8090/health 300 \
+               && echo "$(c 32 '[OK]') llm no ar em http://127.0.0.1:8090" \
+               || { echo "$(c 31 '[FALHA]') veja: journalctl -u llamacpp -n 30"; exit 1; } ;;
+      stop)  sudo systemctl stop llamacpp; echo "llm parado" ;;
+      logs)  sudo journalctl -u llamacpp -f ;;
+      *)     systemctl is-active llamacpp ;;
+    esac ;;
+  start) "$0" llm start; "$0" audio start ;;
+  stop)  sudo systemctl stop llamacpp "${AUDIO[@]}" 2>/dev/null || true; echo "tudo parado" ;;
+  status)
+    printf '%-10s %s\n' "llm"   "$(systemctl is-active llamacpp)"
+    printf '%-10s %s\n' "audio" "$(systemctl is-active "${AUDIO[@]}" | tr '\n' ' ')"
+    printf '%-10s %s\n' "nginx" "$(systemctl is-active nginx)"
+    echo; vram ;;
+  *)
+    cat <<'USAGE'
+v100ctl -- controle do stack V100 (nada sobe no boot)
+
+  v100ctl status              estado dos servicos e VRAM
+  v100ctl start | stop        tudo
+  v100ctl llm   start|stop|logs|status
+  v100ctl audio start|stop|logs|status
+
+Orcamento de VRAM: 31,5 GiB no total.
+  llm (27B Q4_K_M + draft MTP) ... ~19,3 GiB de pesos + KV cache
+  audio (lazy)                 ... 0 ocioso, ~1,8 GiB por placa em uso
+Rodar os dois juntos cabe, mas aperta o KV cache. Prefira subir so o que usar.
+USAGE
+    ;;
+esac

@@ -4,7 +4,8 @@
   "backend": "cuda",
   "device": 0,
   "threads": 4,
-  "lazy_load": false,
+  "lazy_load": true,
+  "idle_unload_ms": 600000,
   "models": [
     {
       "id": "omnivoice",

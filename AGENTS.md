@@ -96,6 +96,19 @@ Rode o experimento de controle. Um erro real desta sessão: concluí que o backe
 CUDA do audio.cpp estava quebrado porque não gerava arquivo — o backend CPU
 também não gerava. A flag era `--out`, não `-o`.
 
+## Layout em produção
+
+Runtime e fonte são separados de propósito. **Nunca aponte um serviço para
+dentro de uma árvore de build** — um rebuild derruba produção.
+
+```
+/opt/v100-stack/   runtime (vem da release)   /srv/models/  modelos
+~/src/v100-stack/  este repo                  ~/build/      fontes descartáveis
+```
+
+Nada sobe no boot. Controle: `v100ctl status|start|stop`, `v100ctl llm start`,
+`v100ctl audio start`. Detalhes em `docs/operacao.md`.
+
 ## Estrutura
 
 ```

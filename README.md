@@ -18,8 +18,20 @@ sudo ./scripts/01-cuda.sh          # CUDA 12.9.1 + patch do glibc 2.41
 sudo ./scripts/02-tuning.sh        # clocks travados, NCCL sobre NVLink
 ./scripts/03-python.sh             # Python 3.12 + torch 2.10 cu129
 sudo ./scripts/install-release.sh  # baixa os binários já compilados
+sudo ./scripts/setup-services.sh   # instala as units e o comando v100ctl
 ./scripts/verify.sh                # confere tudo contra os valores de referência
 ```
+
+Nada sobe no boot. Você controla o que usar:
+
+```bash
+v100ctl status        # serviços e VRAM das duas placas
+v100ctl llm start     # LLM em :8090
+v100ctl audio start   # TTS em :8080, balanceado nas duas placas
+v100ctl stop          # derruba tudo
+```
+
+Layout, orçamento de VRAM e configuração: [docs/operacao.md](docs/operacao.md).
 
 Depois de um `sudo ./scripts/00-driver.sh` pode ser preciso reiniciar. Se as GPUs
 não voltarem com um reboot quente, faça **power-cycle completo** — veja

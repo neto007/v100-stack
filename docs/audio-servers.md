@@ -14,7 +14,8 @@ por processo. O ganho vem de duas instâncias independentes.
 ## Instalar
 
 ```bash
-sudo MODELS_DIR=/opt/v100-stack/models ./scripts/setup-audio-servers.sh
+sudo MODELS_DIR=/srv/models ./scripts/setup-services.sh
+v100ctl audio start
 curl -s localhost:8080/health
 ```
 

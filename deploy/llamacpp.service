@@ -1,0 +1,27 @@
+[Unit]
+Description=llama.cpp server (tensor-parallel nas duas V100 + draft MTP)
+After=network.target nvidia-persistenced.service v100-tuning.service
+Wants=v100-tuning.service
+
+[Service]
+Type=simple
+User=@USER@
+Group=@USER@
+WorkingDirectory=@PREFIX@
+EnvironmentFile=@PREFIX@/deploy/llamacpp.env
+Environment=LD_LIBRARY_PATH=@PREFIX@/llamacpp-sm70:/usr/local/cuda-12.9/lib64
+# NVLink: sem isso o all-reduce do -sm tensor cai para um caminho interno
+Environment=NCCL_P2P_LEVEL=NVL
+ExecStart=@PREFIX@/llamacpp-sm70/llama-server \
+  --model ${LLM_MODEL} \
+  --model-draft ${LLM_DRAFT} --gpu-layers-draft all \
+  --spec-draft-n-max ${SPEC_N_MAX} --spec-draft-n-min 1 \
+  --split-mode tensor --tensor-split 1/1 --n-gpu-layers 99 \
+  --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 \
+  --ctx-size ${LLM_CTX} \
+  --host ${LLM_HOST} --port ${LLM_PORT}
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
