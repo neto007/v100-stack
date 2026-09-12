@@ -1,0 +1,109 @@
+name: build & release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag da release (ex: v0.1.0)'
+        required: true
+        default: 'v0.0.0-dev'
+
+permissions:
+  contents: write
+
+env:
+  # Ubuntu 24.04 traz glibc 2.39. Compilar aqui e rodar no Debian 13 (glibc 2.41)
+  # funciona; o contrario nao. Por isso o runner e DELIBERADAMENTE mais antigo
+  # que o alvo. Bonus: o glibc 2.39 nao tem o conflito sinpi/cospi com o CUDA.
+  CUDA_HOME: /usr/local/cuda-12.9
+  SM_ARCH: '70'
+
+jobs:
+  # ---------------------------------------------------------------- llama.cpp
+  llamacpp:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Liberar disco
+        run: bash .github/free-disk.sh
+      - name: CUDA 12.9 (so os componentes necessarios)
+        run: bash .github/install-cuda.sh nvcc cudart-dev cublas-dev nvtx
+      - name: NCCL (o -sm tensor depende dele para usar o NVLink)
+        run: sudo apt-get install -y -qq libnccl2 libnccl-dev
+      - name: Build
+        run: JOBS=$(nproc) bash build/build-llamacpp.sh
+      - name: Empacotar
+        run: |
+          tar --zstd -cf llamacpp-sm70.tar.zst -C dist llamacpp-sm70
+          ls -lh llamacpp-sm70.tar.zst
+      - uses: actions/upload-artifact@v4
+        with: { name: llamacpp-sm70, path: llamacpp-sm70.tar.zst }
+
+  # --------------------------------------------------------------- flash-attn
+  flashattn:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Liberar disco
+        run: bash .github/free-disk.sh
+      - name: CUDA 12.9
+        run: bash .github/install-cuda.sh nvcc cudart-dev cublas-dev
+      - name: Ambiente Python 3.12 + torch 2.10 cu129
+        run: bash scripts/03-python.sh
+      - name: Build da wheel
+        run: bash build/build-flashattn.sh
+      - uses: actions/upload-artifact@v4
+        with: { name: flashattn-wheel, path: dist/wheels/*.whl }
+
+  # ---------------------------------------------------------------- audio.cpp
+  # O job mais pesado: 139 objetos CUDA e centenas de C++. ~25 min em 36 threads;
+  # num runner de 4 cores pode passar de 3h. O ccache e o que salva reexecucoes.
+  audiocpp:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - name: Liberar disco
+        run: bash .github/free-disk.sh
+      - name: CUDA 12.9
+        run: bash .github/install-cuda.sh nvcc cudart-dev cublas-dev cufft-dev curand-dev nvtx
+      - run: sudo apt-get install -y -qq gcc-13 g++-13 ccache
+      - uses: actions/cache@v4
+        with:
+          path: ~/.ccache
+          key: ccache-audiocpp-${{ github.sha }}
+          restore-keys: ccache-audiocpp-
+      - name: Build
+        env: { CCACHE_DIR: ~/.ccache, CCACHE_MAXSIZE: 5G }
+        run: JOBS=$(nproc) bash build/build-audiocpp.sh
+      - name: Empacotar
+        run: |
+          tar --zstd -cf audiocpp-sm70.tar.zst -C dist audiocpp-sm70
+          ls -lh audiocpp-sm70.tar.zst
+      - uses: actions/upload-artifact@v4
+        with: { name: audiocpp-sm70, path: audiocpp-sm70.tar.zst }
+
+  # ------------------------------------------------------------------ release
+  release:
+    needs: [llamacpp, flashattn, audiocpp]
+    # Publica mesmo se o audio.cpp estourar o tempo: os outros dois ja sao uteis.
+    if: always() && needs.llamacpp.result == 'success'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { path: art, merge-multiple: true }
+      - name: Checksums
+        run: |
+          cd art && sha256sum * > SHA256SUMS && cat SHA256SUMS
+      - name: Publicar
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          gh release create "$TAG" art/* --repo "$GITHUB_REPOSITORY" \
+            --title "$TAG" --notes-file .github/release-notes.md || \
+          gh release upload "$TAG" art/* --repo "$GITHUB_REPOSITORY" --clobber

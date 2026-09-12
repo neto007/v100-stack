@@ -1,0 +1,20 @@
+[Unit]
+Description=audio.cpp server na GPU %i
+After=network.target nvidia-persistenced.service v100-tuning.service
+Wants=v100-tuning.service
+
+[Service]
+Type=simple
+User=@USER@
+Group=@USER@
+WorkingDirectory=@AUDIOCPP_ROOT@
+Environment=LD_LIBRARY_PATH=/usr/local/cuda-12.9/lib64
+# Isola a instancia numa placa: o processo so enxerga a GPU %i, que vira device 0
+Environment=CUDA_VISIBLE_DEVICES=%i
+ExecStart=@AUDIOCPP_ROOT@/build/linux-cuda-sm70/bin/audiocpp_server \
+  --config @AUDIOCPP_ROOT@/deploy/server-gpu%i.json --no-ui
+Restart=on-failure
+RestartSec=5
+# O modelo ocupa ~1.6 GiB; sem limite de memoria para nao matar a carga
+[Install]
+WantedBy=multi-user.target

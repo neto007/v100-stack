@@ -1,0 +1,21 @@
+{
+  "host": "127.0.0.1",
+  "port": 8082,
+  "backend": "cuda",
+  "device": 0,
+  "threads": 4,
+  "lazy_load": false,
+  "models": [
+    {
+      "id": "omnivoice",
+      "family": "omnivoice",
+      "path": "@MODELS_DIR@/OmniVoice-GGUF",
+      "task": "tts",
+      "mode": "offline",
+      "session_options": {
+        "omnivoice.generator_weight_type": "f16",
+        "omnivoice.audio_tokenizer_weight_type": "f16"
+      }
+    }
+  ]
+}
