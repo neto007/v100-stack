@@ -28,13 +28,32 @@ preservar a partição.
 Os serviços são instalados mas **não habilitados**. Você sobe o que for usar:
 
 ```bash
-v100ctl status            # estado dos serviços e VRAM das duas placas
-v100ctl llm start         # LLM em :8090   (~1m30s para carregar)
-v100ctl audio start       # TTS em :8080   (balanceado nas 2 placas)
-v100ctl llm stop
-v100ctl stop              # derruba tudo
-v100ctl llm logs          # journalctl -f do serviço
+v100ctl status                  # estado dos serviços e VRAM das duas placas
+v100ctl llm   start [--web]     # LLM  (~1m30s para carregar)
+v100ctl audio start [--web]     # TTS  (balanceado nas 2 placas)
+v100ctl stop                    # derruba tudo
+v100ctl llm logs                # journalctl -f do serviço
 ```
+
+## As portas, e por que são quatro
+
+| porta | o quê | placas |
+|---|---|---|
+| 8080 | API de áudio | **balanceada nas duas** |
+| 8088 | WebUI de áudio (`--web`) | presa à GPU0 |
+| 8090 | API do LLM | tensor-parallel nas duas |
+| 8091 | WebUI do LLM (`--web`) | idem |
+
+Sem `--web` só as APIs sobem. O `--web` é um flag do próprio `audiocpp_server`,
+então alterná-lo reinicia as instâncias de áudio — leva alguns segundos.
+
+**A WebUI de áudio fica presa a uma placa de propósito.** O `upload_root_` do
+audiocpp é criado com um timestamp por processo, então cada instância tem seu
+próprio diretório temporário. Se o browser subisse um áudio de referência numa
+placa e a síntese caísse na outra, o arquivo não existiria lá — clonagem de voz
+e transcrição quebrariam de forma intermitente. Uso interativo não perde nada:
+um humano clicando gera requisições sequenciais. A porta 8080 segue balanceada
+para uso programático e lote.
 
 Para habilitar no boot, se um dia quiser: `sudo systemctl enable llamacpp`.
 

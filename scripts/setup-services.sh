@@ -12,13 +12,13 @@ mkdir -p "$PREFIX/deploy"
 
 sub(){ sed -e "s|@PREFIX@|$PREFIX|g" -e "s|@MODELS_DIR@|$MODELS|g" -e "s|@USER@|$RUN_USER|g" "$1"; }
 
-for f in server-gpu0.json server-gpu1.json llamacpp.env; do
+for f in server-gpu0.json server-gpu1.json llamacpp.env audiocpp.env; do
   [ -f "$PREFIX/deploy/$f" ] && { warn "preservando $PREFIX/deploy/$f (ja existe)"; continue; }
   sub "$HERE/deploy/$f" > "$PREFIX/deploy/$f"
 done
 sub "$HERE/deploy/audiocpp@.service" > /etc/systemd/system/audiocpp@.service
 sub "$HERE/deploy/llamacpp.service"  > /etc/systemd/system/llamacpp.service
-install -m755 "$HERE/bin/v100ctl" /usr/local/bin/v100ctl
+sub "$HERE/bin/v100ctl" > /usr/local/bin/v100ctl && chmod 755 /usr/local/bin/v100ctl
 chown -R "$RUN_USER":"$RUN_USER" "$PREFIX/deploy"
 
 # audio.cpp resolve model_specs/ pelo diretorio de trabalho. Como o runtime vive
@@ -36,6 +36,8 @@ systemctl daemon-reload
 systemctl disable audiocpp@0 audiocpp@1 llamacpp 2>/dev/null || true
 command -v nginx >/dev/null || apt-get install -y nginx-light
 sub "$HERE/deploy/nginx-audiocpp.conf" > /etc/nginx/sites-available/audiocpp
+# $connection_upgrade precisa existir no bloco http (usado pelos proxies de UI)
+cp "$HERE/deploy/nginx-upgrade-map.conf" /etc/nginx/conf.d/upgrade-map.conf
 ln -sfn /etc/nginx/sites-available/audiocpp /etc/nginx/sites-enabled/audiocpp
 rm -f /etc/nginx/sites-enabled/default
 nginx -t >/dev/null 2>&1 && systemctl reload nginx 2>/dev/null || true
@@ -43,6 +45,6 @@ nginx -t >/dev/null 2>&1 && systemctl reload nginx 2>/dev/null || true
 ok "servicos instalados. Nada sobe no boot."
 echo
 echo "  v100ctl status          estado e VRAM"
-echo "  v100ctl llm start       sobe o LLM   (~1m30s para carregar)"
-echo "  v100ctl audio start     sobe o TTS   (balanceado nas 2 placas)"
+echo "  v100ctl llm start --web  sobe o LLM  (API 8090, UI 8091)"
+echo "  v100ctl audio start --web  sobe o TTS (API 8080 balanceada, UI 8088)"
 echo "  v100ctl stop            derruba tudo"

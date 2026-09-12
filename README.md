@@ -26,9 +26,9 @@ Nada sobe no boot. Você controla o que usar:
 
 ```bash
 v100ctl status        # serviços e VRAM das duas placas
-v100ctl llm start     # LLM em :8090
-v100ctl audio start   # TTS em :8080, balanceado nas duas placas
-v100ctl stop          # derruba tudo
+v100ctl llm   start --web   # LLM  : API 8090 | WebUI 8091
+v100ctl audio start --web   # áudio: API 8080 (balanceada) | WebUI 8088
+v100ctl stop                # derruba tudo
 ```
 
 Layout, orçamento de VRAM e configuração: [docs/operacao.md](docs/operacao.md).

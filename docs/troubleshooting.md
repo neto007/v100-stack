@@ -76,3 +76,29 @@ o estado é compartilhado e a distribuição fica 10/10.
 
 E **não** use `max_conns` para contornar: sem a diretiva `queue` (exclusiva do
 NGINX Plus) ele devolve 502 quando todos os backends estão no limite.
+
+## `{"error":{"message":"WebUI is disabled"}}`
+
+O `audiocpp_server` sobe com `--no-ui` por padrão. Use `v100ctl audio start --web`.
+
+## WebUI do llama-server devolve HTTP 415
+
+```
+Error: gzip is not supported by this browser
+```
+
+Não é erro de configuração. Os assets da WebUI do llama.cpp são servidos
+pré-comprimidos e o servidor exige `Accept-Encoding: gzip`. Navegadores sempre
+mandam esse header; `curl` não manda por padrão. Para testar pela linha de
+comando:
+
+```bash
+curl -H 'Accept-Encoding: gzip' http://127.0.0.1:8091/ | gunzip | head
+```
+
+## `GGUF has no embedded model spec for family '...'`
+
+O audio.cpp resolve `model_specs/` pelo diretório de trabalho. Com o runtime em
+`/opt` (fora da árvore de fontes), a unit precisa passar
+`--model-spec-override $PREFIX/model_specs`. O `setup-services.sh` copia os
+specs automaticamente se encontrar a árvore do audio.cpp.

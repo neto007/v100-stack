@@ -55,7 +55,10 @@ Se você for medir desempenho nesta máquina, evite estes três:
 2. **Speculative decoding tem variância alta** (±2 t/s entre seeds), porque a
    velocidade depende de quantos tokens do draft são aceitos. Use ≥3 seeds. Uma
    execução isolada nos deu 71,8 t/s onde a média real era 67,7.
-3. **`grep -oP 'Generation: \K[0-9,]+'` trunca decimais** quando o locale usa
+3. **`curl` sem `Accept-Encoding: gzip` dá HTTP 415 na WebUI do llama-server.**
+   Os assets são pré-comprimidos e o servidor exige o header; navegadores
+   sempre mandam. Não é bug de configuração.
+4. **`grep -oP 'Generation: \K[0-9,]+'` trunca decimais** quando o locale usa
    ponto. Fixe `LC_NUMERIC=C` e case o separador.
 
 ## Configuração ótima medida
@@ -106,8 +109,18 @@ dentro de uma árvore de build** — um rebuild derruba produção.
 ~/src/v100-stack/  este repo                  ~/build/      fontes descartáveis
 ```
 
-Nada sobe no boot. Controle: `v100ctl status|start|stop`, `v100ctl llm start`,
-`v100ctl audio start`. Detalhes em `docs/operacao.md`.
+Nada sobe no boot. Controle: `v100ctl status|start|stop`, e `--web` para expor
+também a interface de browser:
+
+| porta | o quê | placas |
+|---|---|---|
+| 8080 | API de áudio | balanceada nas duas |
+| 8088 | WebUI de áudio | **presa à GPU0** |
+| 8090 / 8091 | API e WebUI do LLM | tensor-parallel |
+
+A WebUI de áudio é pinada de propósito: o `upload_root_` do audiocpp inclui um
+timestamp por processo, então upload numa instância e síntese na outra
+quebraria clonagem de voz. Não "conserte" isso balanceando.
 
 ## Estrutura
 
