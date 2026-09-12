@@ -34,6 +34,11 @@ não voltarem com um reboot quente, faça **power-cycle completo** — veja
 | `flash_attn_v100-*.whl` | FlashAttention-2 portada para Volta (PyTorch/vLLM) |
 | `SHA256SUMS` | checksums |
 
+> **Compatibilidade de glibc.** Os binários do CI são compilados em Ubuntu 24.04
+> (glibc 2.39) de propósito: rodam em alvos com glibc igual ou mais novo. Se a
+> release tiver sido publicada por `build/release-local.sh` a partir de um
+> Debian 13, ela exige **glibc ≥ 2.41**. Verifique com `ldd --version`.
+
 ## Resultados medidos
 
 **Hardware** — banda HBM2 **823,5 GB/s** (91,5% do pico), NVLink P2P **145,2 GB/s**,
@@ -76,8 +81,12 @@ bash build/build-audiocpp.sh      # ~25 min em 36 threads
 bash build/build-flashattn.sh     # ~9 min
 ```
 
-O CI roda exatamente esses mesmos scripts. Para publicar o que você compilou
-numa release existente: `gh release upload <tag> dist/*.tar.zst --clobber`.
+O CI roda exatamente esses mesmos scripts. Para empacotar e publicar o que você
+compilou localmente:
+
+```bash
+./build/release-local.sh v0.1.0
+```
 
 ## Tetos de versão (não suba nenhum)
 

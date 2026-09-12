@@ -29,7 +29,6 @@ cp -a "$SRC/build/bin/." "$OUT/"
 
 # O binario tem que conter APENAS sm_70: qualquer outra arquitetura indica
 # que o CMAKE_CUDA_ARCHITECTURES nao pegou.
-archs=$("${CUDA_HOME}/bin/cuobjdump" --list-elf "$OUT"/libggml-cuda.so* 2>/dev/null \
-        | grep -oE 'sm_[0-9]+' | sort -u | tr '\n' ' ')
-[ "$(echo $archs)" = "sm_${SM_ARCH}" ] || die "arquiteturas erradas no build: '$archs'"
+archs=$(cuda_archs "$OUT/libggml-cuda.so")
+[ "$archs" = "sm_${SM_ARCH}" ] || die "arquiteturas erradas no build: '$archs' (esperado sm_${SM_ARCH})"
 ok "llama.cpp pronto em $OUT (arquiteturas: $archs)"

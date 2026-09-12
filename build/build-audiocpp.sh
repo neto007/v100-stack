@@ -30,7 +30,6 @@ cmake --build "$SRC/build/sm70" --config Release -j "$JOBS"
 rm -rf "$OUT"; mkdir -p "$OUT"
 cp -a "$SRC/build/sm70/bin/." "$OUT/"
 ( cd "$SRC" && git rev-parse --short HEAD ) > "$OUT/COMMIT"
-archs=$("${CUDA_HOME}/bin/cuobjdump" --list-elf "$OUT/audiocpp_cli" 2>/dev/null \
-        | grep -oE 'sm_[0-9]+' | sort -u | tr '\n' ' ')
-[ "$(echo $archs)" = "sm_${SM_ARCH}" ] || die "arquiteturas erradas no build: '$archs'"
+archs=$(cuda_archs "$OUT/audiocpp_cli")
+[ "$archs" = "sm_${SM_ARCH}" ] || die "arquiteturas erradas no build: '$archs' (esperado sm_${SM_ARCH})"
 ok "audio.cpp pronto em $OUT (arquiteturas: $archs)"

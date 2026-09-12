@@ -52,3 +52,13 @@ patch_cuda_glibc() {
   rm -f /tmp/_glibc_probe /tmp/_glibc_probe.cu
   ok "patch aplicado; original preservado em ${h}.orig"
 }
+
+# Lista as arquiteturas de UM binario. Passar varios arquivos para o cuobjdump
+# faz ele imprimir o texto de ajuda -- que contem a lista de TODAS as
+# arquiteturas conhecidas e vira falso positivo no grep. Resolve symlink e usa
+# exatamente um arquivo.
+cuda_archs() {
+  local f; f=$(readlink -f "$1") || return 1
+  "${CUDA_HOME}/bin/cuobjdump" --list-elf "$f" 2>/dev/null \
+    | grep -oE 'sm_[0-9]+' | sort -u -V | tr '\n' ' ' | sed 's/ $//'
+}

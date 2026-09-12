@@ -45,8 +45,7 @@ PY
 hdr "5. llama.cpp  (referencia 8B Q6_K, 1 placa: pp512 3339 t/s | tg128 94 t/s)"
 B="$PREFIX/llamacpp-sm70"
 [ -x "$B/llama-bench" ] && "$B/llama-bench" --help >/dev/null 2>&1 && ok "llama-bench presente" || warn "llama.cpp nao instalado"
-[ -x "$B/llama-bench" ] && "$CUDA_HOME/bin/cuobjdump" --list-elf "$B"/libggml-cuda.so* 2>/dev/null \
-  | grep -oE 'sm_[0-9]+' | sort -u | xargs -I{} echo "  arquitetura: {}"
+[ -e "$B/libggml-cuda.so" ] && echo "  arquitetura: $(cuda_archs "$B/libggml-cuda.so")"
 
 hdr "6. audio.cpp"
 A="$PREFIX/audiocpp-sm70"
